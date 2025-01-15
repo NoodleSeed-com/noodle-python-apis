@@ -5,9 +5,13 @@
 - Python 3.11+ (primary language)
 - FastAPI (web framework)
 - PyTorch/TensorFlow (AI/ML)
-- SQLAlchemy (ORM)
 - Pydantic (data validation)
-- PostgreSQL (database)
+- Supabase (Backend as a Service)
+  - PostgreSQL with RLS
+  - Real-time subscriptions
+  - Authentication
+  - Storage
+  - Edge Functions
 - Redis (caching/real-time)
 - RabbitMQ/Kafka (messaging)
 
@@ -25,21 +29,30 @@
 - Flake8 (linting)
 - Pytest (testing)
 - pre-commit hooks
+- Supabase CLI
 
 ## Development Setup
 1. Requirements:
    - Python 3.11+
-   - Docker
+   - Docker & Docker Compose
    - Git
    - Poetry/pip
-   - PostgreSQL (local)
+   - Supabase CLI
    - Redis (local)
 
 2. Environment Setup:
    ```bash
+   # Install Supabase CLI
+   brew install supabase/tap/supabase
+
+   # Python environment setup
    python -m venv venv
    source venv/bin/activate  # or `venv\Scripts\activate` on Windows
    pip install -r requirements.txt
+
+   # Start local Supabase
+   supabase init
+   supabase start
    ```
 
 3. Local Development:
@@ -47,6 +60,28 @@
    - Docker Compose for local service orchestration
    - Environment variables in .env files (not committed)
    - Hot reload enabled for development
+
+4. Local Supabase Environment:
+   - Studio Dashboard: http://localhost:54323
+   - API Endpoint: http://localhost:54321
+   - Database Connection:
+     ```
+     Host: localhost
+     Port: 54322
+     Database: postgres
+     User: postgres
+     Password: postgres
+     ```
+   - Inbucket (Email Testing): http://localhost:54324
+   - Analytics Dashboard: http://localhost:54327
+
+5. Default Credentials:
+   - Database:
+     - User: postgres
+     - Password: postgres
+   - Dashboard:
+     - Email: admin@admin.com
+     - Password: admin
 
 ## Technical Constraints
 - Python 3.11+ required for performance optimizations

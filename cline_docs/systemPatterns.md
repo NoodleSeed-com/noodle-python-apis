@@ -11,12 +11,16 @@
 - Python as primary backend language
   - FastAPI for high-performance async APIs
   - PyTorch/TensorFlow for AI model integration
-  - SQLAlchemy for ORM
   - Pydantic for data validation
+- Supabase for core infrastructure
+  - PostgreSQL with Row Level Security (RLS)
+  - Built-in authentication and authorization
+  - Real-time subscriptions
+  - Object storage
+  - Edge Functions for serverless compute
 - Docker for containerization
 - Kubernetes for orchestration
-- PostgreSQL for persistent storage
-- Redis for caching and real-time features
+- Redis for additional caching
 - RabbitMQ/Kafka for event messaging
 
 ## Design Patterns
@@ -39,10 +43,17 @@
   - Handles its own logging and monitoring
 
 ## Security Patterns
-- JWT for authentication
-- OAuth2 for authorization
-- Rate limiting
-- Input validation
-- API versioning
-- Secure headers
-- CORS policies
+- Supabase Authentication
+  - JWT tokens with Row Level Security
+  - OAuth2 providers integration
+  - Email/password and magic link auth
+- Database Security
+  - Row Level Security (RLS) policies
+  - Database roles and permissions
+  - Secure connection pooling
+- API Security
+  - Rate limiting
+  - Input validation
+  - API versioning
+  - Secure headers
+  - CORS policies

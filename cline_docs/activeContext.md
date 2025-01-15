@@ -2,29 +2,43 @@
 
 ## Current Focus
 - Initial project setup and repository initialization
+- Setting up Supabase local development environment
 - Establishing basic project structure for Noodle Seed's backend services
-- Setting up development environment for AI-driven microservices
+- Configuring development environment for AI-driven microservices
 
 ## Recent Changes
 - Initialized git repository
 - Created .gitignore file for Python projects
 - Established documentation structure
 - Created initial product context documentation
+- Updated technical architecture to use Supabase
+- Pulled Supabase Docker images
 
 ## Next Steps
-1. Set up project structure for microservices:
-   - SeedSpec processing service
+1. Set up local Supabase development environment:
+   - Initialize Supabase project
+   - Configure authentication providers
+   - Set up initial database schema
+   - Define Row Level Security policies
+
+2. Set up project structure for microservices:
+   - SeedSpec processing service with Supabase Edge Functions
    - AI model orchestration service
-   - User management service
-   - Project management service
-   - Code generation service
-2. Initialize Python virtual environment
-3. Create requirements.txt with initial dependencies:
+   - Project management service with real-time features
+   - Code generation service with storage integration
+
+3. Initialize Python virtual environment and dependencies:
    - FastAPI for RESTful APIs
    - PyTorch/TensorFlow for AI model integration
-   - SQLAlchemy for database operations
+   - Supabase Python client
    - Pydantic for data validation
-4. Set up Docker configuration for containerization
+
+4. Configure Supabase integrations:
+   - Set up authentication flows
+   - Configure storage buckets
+   - Implement real-time subscriptions
+   - Deploy initial Edge Functions
+
 5. Create initial API documentation using OpenAPI/Swagger
 6. Implement basic health check endpoints
 7. Set up CI/CD pipeline configuration
