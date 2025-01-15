@@ -46,3 +46,6 @@ node_modules/
 
 # Misc
 .DS_Store
+
+# Cline Documentation
+cline_docs/
