@@ -55,6 +55,70 @@ Supabase services will be available at:
 └── README.md           # This file
 ```
 
+## API Endpoints
+
+### Health Check
+
+- **URL:** `/health`
+- **Method:** `GET`
+- **Description:** Checks the health of the application.
+- **Response:**
+  ```json
+  {
+    "status": "healthy",
+    "version": "0.1.0"
+  }
+  ```
+
+### Image Generation
+
+- **URL:** `/generate_image/`
+- **Method:** `POST`
+- **Description:** Generates an image based on a text prompt using Google's Imagen model, with caching and rate limiting.
+- **Rate Limit:** 10 requests per minute
+- **Request Body:**
+  ```json
+  {
+    "prompt": "A cat wearing a hat"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "image_url": "https://example.com/storage/v1/object/public/generated-images/123e4567-e89b-12d3-a456-426614174000.png"
+  }
+  ```
+- **Features:**
+  - Caching: Previously generated images are cached to improve response time
+  - Rate Limiting: 10 requests per minute per IP
+  - Retry Logic: Automatic retries with exponential backoff
+  - Error Handling: Detailed error messages and logging
+  - Storage: Images stored in Supabase storage
+
+#### Testing the Image Generation Endpoint
+
+You can test the image generation endpoint using `curl`:
+
+1. **Generate a new image:**
+    ```bash
+    curl -X POST -H "Content-Type: application/json" \
+         -d '{"prompt": "A cat wearing a hat"}' \
+         http://localhost:8000/generate_image/
+    ```
+    Response will contain a URL to the generated image.
+
+2. **Test caching (same prompt):**
+    ```bash
+    # Second request with same prompt will return cached image URL
+    curl -X POST -H "Content-Type: application/json" \
+         -d '{"prompt": "A cat wearing a hat"}' \
+         http://localhost:8000/generate_image/
+    ```
+
+3. **Rate Limiting:**
+    - Endpoint is limited to 10 requests per minute per IP
+    - Exceeding this limit will return a 429 Too Many Requests response
+
 ## API Documentation
 
 The API documentation is automatically generated and can be accessed at:
