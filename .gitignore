@@ -47,5 +47,12 @@ node_modules/
 # Misc
 .DS_Store
 
+# Generated files
+generated_image*.png
+test_output.png
+*_output.json
+uvicorn.pid
+vertex-ai-key.json
+
 # Cline Documentation
 cline_docs/

@@ -74,12 +74,15 @@ Supabase services will be available at:
 
 - **URL:** `/generate_image/`
 - **Method:** `POST`
-- **Description:** Generates an image based on a text prompt using Google's Imagen model, with caching and rate limiting.
-- **Rate Limit:** 10 requests per minute
-- **Request Body:**
-  ```json
+- **Description:** Generates an image using Stability AI's API with structured prompts, caching, and error handling.
+- **Content-Type:** `multipart/form-data`
+- **Request Parameters:**
+  ```typescript
   {
-    "prompt": "A cat wearing a hat"
+    subject: string;       // Required: Main description of what to generate
+    style?: string;       // Optional: Artistic style or visual approach
+    context?: string;     // Optional: Usage context or theme
+    negative_prompt?: string; // Optional: What to avoid in the image
   }
   ```
 - **Response:**
@@ -89,35 +92,73 @@ Supabase services will be available at:
   }
   ```
 - **Features:**
-  - Caching: Previously generated images are cached to improve response time
-  - Rate Limiting: 10 requests per minute per IP
-  - Retry Logic: Automatic retries with exponential backoff
-  - Error Handling: Detailed error messages and logging
-  - Storage: Images stored in Supabase storage
+  - Structured prompts for better results
+  - Image caching in Supabase
+  - Automatic retries with exponential backoff
+  - Error handling with detailed messages
+  - Content moderation support
 
 #### Testing the Image Generation Endpoint
 
 You can test the image generation endpoint using `curl`:
 
-1. **Generate a new image:**
+1. **Basic Usage:**
     ```bash
-    curl -X POST -H "Content-Type: application/json" \
-         -d '{"prompt": "A cat wearing a hat"}' \
-         http://localhost:8000/generate_image/
-    ```
-    Response will contain a URL to the generated image.
-
-2. **Test caching (same prompt):**
-    ```bash
-    # Second request with same prompt will return cached image URL
-    curl -X POST -H "Content-Type: application/json" \
-         -d '{"prompt": "A cat wearing a hat"}' \
+    curl -X POST -F "subject=A serene mountain landscape" \
          http://localhost:8000/generate_image/
     ```
 
-3. **Rate Limiting:**
-    - Endpoint is limited to 10 requests per minute per IP
-    - Exceeding this limit will return a 429 Too Many Requests response
+2. **With Style and Context:**
+    ```bash
+    curl -X POST \
+         -F "subject=A medical cross symbol" \
+         -F "style=minimalist line art" \
+         -F "context=healthcare app with blue theme" \
+         http://localhost:8000/generate_image/
+    ```
+
+3. **Error Handling:**
+   - 400: Invalid parameters
+   - 403: Content moderation triggered
+   - 429: Rate limit exceeded
+   - 500: Internal server error
+
+## Frontend Setup
+
+The project includes a Next.js frontend with a reusable ImageGenerator component:
+
+```typescript
+import ImageGenerator from './components/ImageGenerator';
+
+// Basic usage
+<ImageGenerator 
+  subject="A serene mountain landscape"
+/>
+
+// Advanced usage
+<ImageGenerator 
+  subject="A medical cross symbol"
+  style="minimalist line art"
+  context="healthcare app with blue theme"
+  negativePrompt="complex, detailed, photorealistic"
+  width={200}
+  height={200}
+  cornerRadius={16}
+  onGenerate={(url) => console.log('Generated:', url)}
+  onError={(error) => console.error('Error:', error)}
+/>
+```
+
+### Preset Scenarios
+
+The frontend includes predefined scenarios for common use cases:
+
+1. Basic Usage
+2. Medical App Icon
+3. E-commerce Product
+4. Game Asset
+
+Each scenario demonstrates optimal parameters for specific use cases.
 
 ## API Documentation
 
